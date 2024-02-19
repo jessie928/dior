@@ -125,10 +125,10 @@ h5_to_seurat <- function(h5, assay.name){
     colnames(seurat_list[['data']][['rawX']]) <- rownames(seurat_list[['obs']])
     seurat <- Seurat::CreateSeuratObject(counts = seurat_list[['data']][['rawX']], assay = assay.name)
     seurat@assays[[assay.name]]@scale.data <- seurat_list[['data']][['X']]
-    seurat@assays[[assay.name]]@meta.features <- seurat_list[['var']][['rawX']]
+    seurat@assays[[assay.name]]@meta.data <- seurat_list[['var']][['rawX']]
   }else{
     seurat <- Seurat::CreateSeuratObject(counts = seurat_list[['data']][['X']], assay = assay.name)
-    seurat@assays[[assay.name]]@meta.features <- seurat_list[['var']][['X']]
+    seurat@assays[[assay.name]]@meta.data <- seurat_list[['var']][['X']]
   }
   seurat@meta.data <- seurat_list[['obs']]
   for(sl in names(seurat_list)){
