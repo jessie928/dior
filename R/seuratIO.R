@@ -209,7 +209,7 @@ seurat_to_h5 <- function(seurat=NULL, h5=NULL, assay.name = NULL, save.graphs = 
   if(assay.name %in% names(slot(object = seurat, name = 'assays'))){
     #--- data
     slot_assay <- slot(object = seurat, name = 'assays')[[assay.name]]
-    if(length(slot_assay@scale.data)>0){
+    if(length(slot_assay$scale.data)>0){
       if(save.scale){
         n1 = 'rawX'
         sdata = 'X'
@@ -221,18 +221,18 @@ seurat_to_h5 <- function(seurat=NULL, h5=NULL, assay.name = NULL, save.graphs = 
       n1 = 'X'
       sdata = NULL
     }
-    df_to_h5(df = slot(object = slot_assay, name = 'meta.features'), h5 = var, gr_name = n1)
-    if(all(slot_assay@data[,1] == slot_assay@counts[,1])){
-      matrix_to_h5(mat = slot(object = slot_assay, name = 'counts'), h5 = data, gr_name = n1)
+    df_to_h5(df = slot(object = slot_assay, name = 'meta.data'), h5 = var, gr_name = n1)
+    if(all(slot_assay$data[,1] == slot_assay$counts[,1])){
+      matrix_to_h5(mat = slot_assay$counts), h5 = data, gr_name = n1)
     }else{
       layers = h5$create_group('layers')
-      matrix_to_h5(mat = slot(object = slot_assay, name = 'counts'), h5 = layers, gr_name= 'counts')
-      matrix_to_h5(mat = slot(object = slot_assay, name = 'data'), h5 = data, gr_name = n1)
+      matrix_to_h5(mat = slot_assay$counts), h5 = layers, gr_name= 'counts')
+      matrix_to_h5(mat = slot_assay$data), h5 = data, gr_name = n1)
     }
     if(!is.null(sdata)){
-      matrix_to_h5(mat = slot(object = slot_assay, name = 'scale.data'), h5 = data, gr_name = sdata)
-      var1 = slot(object = slot_assay, name = 'meta.features')
-      df_to_h5(df = var1[rownames(slot(object = slot_assay, name = 'scale.data')), ], h5 = var, gr_name = sdata)
+      matrix_to_h5(mat = slot_assay$scale.data, h5 = data, gr_name = sdata)
+      var1 = slot(object = slot_assay, name = 'meta.data')
+      df_to_h5(df = var1[rownames(slot_assay$scale.data)), ], h5 = var, gr_name = sdata)
     }
     #--- save the cell annotation
     df_to_h5(df = slot(object = seurat, name = 'meta.data'), h5 = h5, gr_name = 'obs')
