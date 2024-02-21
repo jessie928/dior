@@ -223,11 +223,11 @@ seurat_to_h5 <- function(seurat=NULL, h5=NULL, assay.name = NULL, save.graphs = 
     }
     df_to_h5(df = slot(object = slot_assay, name = 'meta.data'), h5 = var, gr_name = n1)
     if(all(slot_assay$data[,1] == slot_assay$counts[,1])){
-      matrix_to_h5(mat = slot_assay$counts), h5 = data, gr_name = n1)
+      matrix_to_h5(mat = slot_assay$counts, h5 = data, gr_name = n1)
     }else{
       layers = h5$create_group('layers')
-      matrix_to_h5(mat = slot_assay$counts), h5 = layers, gr_name= 'counts')
-      matrix_to_h5(mat = slot_assay$data), h5 = data, gr_name = n1)
+      matrix_to_h5(mat = slot_assay$counts, h5 = layers, gr_name= 'counts')
+      matrix_to_h5(mat = slot_assay$data, h5 = data, gr_name = n1)
     }
     if(!is.null(sdata)){
       matrix_to_h5(mat = slot_assay$scale.data, h5 = data, gr_name = sdata)
