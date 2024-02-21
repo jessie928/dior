@@ -232,7 +232,7 @@ seurat_to_h5 <- function(seurat=NULL, h5=NULL, assay.name = NULL, save.graphs = 
     if(!is.null(sdata)){
       matrix_to_h5(mat = slot_assay$scale.data, h5 = data, gr_name = sdata)
       var1 = slot(object = slot_assay, name = 'meta.data')
-      df_to_h5(df = var1[rownames(slot_assay$scale.data)), ], h5 = var, gr_name = sdata)
+      df_to_h5(df = var1[rownames(slot_assay$scale.data), ], h5 = var, gr_name = sdata)
     }
     #--- save the cell annotation
     df_to_h5(df = slot(object = seurat, name = 'meta.data'), h5 = h5, gr_name = 'obs')
